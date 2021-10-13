@@ -1,0 +1,413 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/css/all.css" rel="stylesheet" type="text/css"/>  
+</head>
+<body>
+  <div class="container">
+    <h2><a class="breadcrumb-item text-dark" href="/">Client Relationship Management System Database</a> <span class="badge badge-secondary" id="databaseFilterNotice"></span></h2>
+    <h1>Clients</h1>
+    <!-- Search the Table  -->
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01"><i class="fa fa-search"></i></label>
+        </div>
+        <input class="form-control py-2 border-left-0 border" type="search" placeholder="Filter Clients By First Name..." id="tableFilter"> 
+    </div>
+
+    <!-- Clients Table -->
+    <table class="table table-hover table-striped" id="clients">
+      <thead>
+        <tr>
+            <th style="width: 10%">First Name</th>
+            <th style="width: 10%">Surname</th>
+            <th style="width: 10%">Mobile</th> 
+            <th style="width: 10%">Email</th>
+            <th style="width: 10%">Doctor</th>
+            <th class="text-center" style="width: 15%">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each a}}
+        <tr >
+          <td style="width: 10%">{{firstName}}</td>
+          <td style="width: 10%">{{surname}}</td>
+          <td style="width: 10%">{{mobilePhone}}</td>
+          <td style="width: 10%">{{email}}</td>
+          <td style="width: 10%">{{doctor}}</td>
+          <td class="text-right" style="width: 15%">
+            <a href="javascript:void(0);" class="btn btn-sm btn-info update" data-id="{{ id }}">Update</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{ id }}">Delete</a>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <!--Add Client Button-->
+    <div class="input-group mb-3">
+        <button class="btn btn-primary mr-5" data-toggle="modal" data-target="#addModal">Add</button>
+    </div>
+
+    <!-- Add client Modal-->
+    <form id="addForm" action="/clients" method="POST">
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add New Client</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <input type="text" name="title" class="form-control" placeholder="Title">
+               </div>
+               <div class="form-group">
+                   <input type="text" name="firstName" class="form-control" placeholder="First Name" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="surname" class="form-control" placeholder="Surname" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="dob" class="form-control" placeholder="Date of Birth (dd/mm/yyyy)" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="mobilePhone" class="form-control" placeholder="Mobile Phone Number" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="homePhone" class="form-control" placeholder="Home Phone Number" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="email" class="form-control" placeholder="Email Address" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="guardianName" class="form-control" placeholder="Parent/Guardian Name if under 18" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="permission" class="form-control" placeholder="Permission to leave message [Y/N] on Mobile/Home Phone or Email" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="record" class="form-control" placeholder="Date for Record Creation (dd/mm/yy)" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="doctor" class="form-control" placeholder="Doctor" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="referred" class="form-control" placeholder="Referred By" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="address1" class="form-control" placeholder="Address Line 1" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="address2" class="form-control" placeholder="Address Line 2">
+               </div>
+                <div class="form-group">
+                   <input type="text" name="town" class="form-control" placeholder="Town" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="county" class="form-control" placeholder="County" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="eircode" class="form-control" placeholder="Eircode">
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
+             </div>
+           </div>
+         </div>
+        </div>
+    </form>
+
+    <!-- Update Client Modal -->
+    <form id="updateForm" action="/clients" method="PUT"> 
+       <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update Client</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <div class="form-group">
+                   <input type="text" name="title" class="form-control" placeholder="Title">
+               </div>
+               <div class="form-group">
+                   <input type="text" name="firstName" class="form-control" placeholder="First Name" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="surname" class="form-control" placeholder="Surname" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="dob" class="form-control" placeholder="Date of Birth (dd/mm/yyyy)" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="mobilePhone" class="form-control" placeholder="Mobile Phone Number" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="homePhone" class="form-control" placeholder="Home Phone Number" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="email" class="form-control" placeholder="Email Address" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="guardianName" class="form-control" placeholder="Parent/Guardian Name if under 18" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="permission" class="form-control" placeholder="Permission to leave message [Y/N] on Mobile/Home Phone or Email" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="record" class="form-control" placeholder="Date for Record Creation (registered)" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="doctor" class="form-control" placeholder="Doctor" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="referred" class="form-control" placeholder="Referred By" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="address1" class="form-control" placeholder="Address Line 1" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="address2" class="form-control" placeholder="Address Line 2">
+               </div>
+                <div class="form-group">
+                   <input type="text" name="town" class="form-control" placeholder="Town" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="county" class="form-control" placeholder="County" required>
+               </div>
+                <div class="form-group">
+                   <input type="text" name="eircode" class="form-control" placeholder="Eircode">
+               </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" name="clientId" class="id">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+    </form>
+
+    <!-- Delete Client Modal-->
+    <form id="deleteForm" action="/clients" method="DELETE">
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                   <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">Delete Client</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   </div>
+                   <div class="modal-body">
+                        <strong>Are you sure you want to delete this client?</strong>
+                   </div>
+                   <div class="modal-footer">
+                        <input type="hidden" name="clientId" class="form-control id" required>
+                        <button type="submit" class="btn btn-success">Delete</button>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Operation Successful Alert Modal -->
+    <div class="modal fade" id="successAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-success" role="alert">
+                OPERATION WAS SUCCESSFUL
+            </div>
+        </div>
+    </div>
+
+    <!-- Operation Unsuccessful Alert Modal -->
+    <div class="modal fade" id="errorAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-danger" role="alert">
+                OPERATION WAS UNSUCCESSFUL
+            </div>
+        </div>
+    </div>
+ </div>
+ 
+<script src="/assets/js/jquery-3.5.0.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function(){
+        //
+        // Handle Add Modal form submit using AJAX PUT
+        //
+        var addForm = $("#addForm");
+        addForm.submit(function(e){
+            e.preventDefault(); // prevent handling the normal form submit click
+            $.ajax({
+                type: addForm.attr('method'),
+                url:  addForm.attr('action'),
+                data: addForm.serialize(), // get data from form
+                success: function (data) {
+                    console.log('Update successful!');
+                    $('#successAlert').modal('show');
+                    var timer = setTimeout(function() {
+                        $(location).attr('href', '/')
+                    }, 3000);
+                },
+                error: function (data) {
+                    console.log('An error occurred.');
+                    $('#errorAlert').modal('show');
+                    var timer = setTimeout(function() {
+                        $(location).attr('href', '/')
+                    }, 3000);
+                },
+            });
+            $('#addModal').modal('hide');
+        });
+        //
+        // Set up the Update Modal
+        //
+        $('#clients').on('click','.update',function(){
+            var clients_id = $(this).data('id');
+            var clients_title = $(this).data('title');
+            var clients_firstName = $(this).data('firstName');
+            var clients_surname = $(this).data('surname');
+            var clients_dob = $(this).data('dob');
+            var clients_mobilePhone = $(this).data('mobilePhone');
+            var clients_homePhone = $(this).data('homePhone');
+            var clients_email = $(this).data('email');
+            var clients_guardianName = $(this).data('guardianName');
+            var clients_permission = $(this).data('permission');
+            var clients_record = $(this).data('record');
+            var clients_doctor = $(this).data('doctor');
+            var clients_referred = $(this).data('referred');
+            var clients_address1 = $(this).data('address1');
+            var clients_address2 = $(this).data('address2');
+            var clients_town = $(this).data('town');
+            var clients_county = $(this).data('county');
+            var clients_eircode = $(this).data('eircode');
+
+            $('#updateModal').modal('show');
+            $('.id').val(clients_id);
+            $('.title').val(clients_title);
+            $('.firstName').val(clients_firstName);
+            $('.surname').val(clients_surname);
+            $('.dob').val(clients_dob);
+            $('.mobilePhone').val(clients_mobilePhone);
+            $('.homePhone').val(clients_homePhone);
+            $('.email').val(clients_email);
+            $('.guardianName').val(clients_guardianName);
+            $('.permission').val(clients_permission);
+            $('.record').val(clients_record);
+            $('.doctor').val(clients_doctor);
+            $('.referred').val(clients_referred);
+            $('.address1').val(clients_address1);
+            $('.address2').val(clients_address2);
+            $('.town').val(clients_town);
+            $('.county').val(clients_county);
+            $('.eircode').val(clients_eircode);
+          
+        });
+        //
+        // Handle Update Modal form submit using AJAX PUT
+        //
+        var updateForm = $("#updateForm");
+        updateForm.submit(function(e){
+            e.preventDefault(); // prevent handling the normal form submit click
+            var id = updateForm.find('input[name="clientId"]').val();    
+            $.ajax({
+                type: updateForm.attr('method'),
+                url:  updateForm.attr('action')+"/"+id,
+                data: updateForm.serialize(), // get data from form
+                success: function (data) {
+                    console.log('Update successful!');
+                    $('#successAlert').modal('show');
+                    var timer = setTimeout(function() {
+                        $(location).attr('href', '/')
+                    }, 3000);
+                },
+                error: function (data) {
+                    console.log('An error occurred.');
+                    $('#errorAlert').modal('show');
+                    var timer = setTimeout(function() {
+                        $(location).attr('href', '/')
+                    }, 3000);
+                },
+            });
+            $('#updateModal').modal('hide');
+        });
+        //
+        // Set up the Delete Modal
+        //
+        $('#clients').on('click','.delete',function(){
+            var clients_id = $(this).data('id');
+    
+            $('#deleteModal').modal('show');
+            $('.id').val(clients_id);
+        });
+        //
+        // Handle Delete Modal form submit using AJAX DELETE
+        //
+        var deleteForm = $("#deleteForm");
+        deleteForm.submit(function(e){
+            e.preventDefault();  // prevent handling the normal form submit click
+            var id = deleteForm.find('input[name="clientId"]').val();   
+            $.ajax({
+                type: deleteForm.attr('method'),
+                url:  deleteForm.attr('action')+"/"+id,
+                success: function (data) {
+                    console.log('Deletion successful!');
+                    $('#successAlert').modal('show');
+                    var timer = setTimeout(function() {
+                        $(location).attr('href', '/')
+                    }, 3000);
+                },
+                error: function (data) {
+                    console.log('An error occurred.');
+                    $('#errorAlert').modal('show');
+                    var timer = setTimeout(function() {
+                        $(location).attr('href', '/')
+                    }, 3000);
+                },
+            });
+            $('#deleteModal').modal('hide');
+        });
+      
+        // Search: Table Filter
+        $("#tableFilter").keyup(function(){
+            var filter = $(this).val().toUpperCase(); 
+            $("#clients").find('tr').each(function(rows) {
+                if (rows !==  0) {
+                    var row = $(this);
+                    var searching = "";
+                    searching = row.find("td:first").text().toUpperCase();
+                    if (searching.indexOf(filter) != -1) {               
+                        row.show();
+                    } else {
+                        row.hide();
+                    }
+                }
+            });
+        });
+        //
+        // Search: Database search
+        //
+        $("#databaseSearch").on('click',function() {
+            var search = $("#databaseSearchFilter").val().replace(/[|&;$%@"<>()+,^  ]/g, "");
+            if (search) {
+                $(location).attr('href', '/'+$("#databaseSearchSelect").val()+'/'+search);
+            } else {
+                $(location).attr('href', '/');
+            }
+        });
+        if ($(location).attr('pathname') !== '/') {
+           $('#databaseFilterNotice').text("("+$(location).attr('pathname')+")");
+        }
+    });
+</script>
+</body>
+</html>
